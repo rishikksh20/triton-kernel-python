@@ -1,1 +1,1 @@
-# kernel-triton-python
+# Kernel Triton Tutorial and Practice Knowledge Base
