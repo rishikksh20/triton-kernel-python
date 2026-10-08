@@ -1,6 +1,6 @@
 # 13. Online softmax: stream the maximum and denominator together
 
-Previous: [attention without Flash](12_attention_without_flash.md). Related: [row-wise softmax](06_softmax.md).
+Previous: [attention without Flash](12_attention_without_flash.md). Next: [FlashAttention forward](14_flashattention_forward.md). Related: [row-wise softmax](06_softmax.md).
 
 This is a self-contained Markdown notebook. Run sections 1–8 in order, or run the final complete code block independently. The examples accept contiguous FP32 matrices of finite scores on one NVIDIA CUDA GPU, with 1–65536 columns and any nonnegative row count. Each program streams one row in bounded tiles. The code implements forward softmax without a registered backward operation.
 
@@ -388,7 +388,7 @@ The first correction is zero, and the second is `exp(-2)`. Reverse the block ord
 
 ## Try next
 
-Try changing block sizes and moving the largest value between the first and last blocks. A later extension can carry the weighted value numerator together with the denominator to build a tiled attention algorithm.
+Try changing block sizes and moving the largest value between the first and last blocks. Continue with [FlashAttention forward](14_flashattention_forward.md), which carries the weighted value numerator together with the denominator to compute attention without storing the full probability matrix.
 
 ## 9. Complete code in one block
 
