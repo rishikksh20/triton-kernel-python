@@ -1,6 +1,6 @@
 # 9. MatMul: multiply matrices with two-dimensional tiles
 
-Previous: [LayerNorm](08_layernorm.md). Start of the series: [vector addition](01_vector_addition.md).
+Previous: [LayerNorm](08_layernorm.md). Next: [MatMul + bias + activation](10_matmul_bias_activation.md). Start of the series: [vector addition](01_vector_addition.md).
 
 This is a self-contained Markdown notebook. Run sections 1–8 in order, or run the final complete code block independently. The examples multiply two contiguous **FP32 matrices on one NVIDIA CUDA GPU**, with finite values whose products and accumulated sums remain representable in FP32. The output is FP32. These kernels implement forward computation without a registered PyTorch backward operation.
 
