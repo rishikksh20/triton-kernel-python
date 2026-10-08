@@ -1,8 +1,8 @@
 # Kernel Triton Tutorial and Practice Knowledge Base
 
-A hands-on guide to writing GPU kernels in Python with Triton. Start with GPU architecture and vector addition, then build up to reductions, normalization, tiled matrix multiplication, and FlashAttention forward and backward.
+A hands-on guide to writing GPU kernels in Python with Triton. Start with GPU architecture and vector addition, then build up to reductions, normalization, tiled matrix multiplication, FlashAttention, quantization, decoding, and routed expert kernels.
 
-The repository contains a [GPU fundamentals guide](BASICS.md), **17 self-contained Markdown tutorials**, and a [standalone matrix multiplication example](kernels/matrix_multiplication.py). The tutorials connect each operation's equations to a PyTorch reference, a Triton kernel, correctness checks, and benchmarks you can run on your GPU.
+The repository contains a [GPU fundamentals guide](BASICS.md), **26 self-contained Markdown tutorials**, and a [standalone matrix multiplication example](kernels/matrix_multiplication.py). The tutorials connect each operation's equations to a PyTorch reference, a Triton kernel, correctness checks, and benchmarks you can run on your GPU.
 
 ## Start here
 
@@ -89,8 +89,17 @@ Each step adds a kernel pattern used by later examples.
 | 15 | [Causal FlashAttention](tutorials/15_causal_flashattention.md) | Triangular masking and skipping future tiles |
 | 16 | [Multi-head FlashAttention](tutorials/16_multi_head_flashattention.md) | Independent state for each batch/head pair |
 | 17 | [FlashAttention backward](tutorials/17_flashattention_backward.md) | Probability recomputation, gradients, and PyTorch autograd |
+| 18 | [Quantization / dequantization](tutorials/18_quantization_dequantization.md) | Row reductions, signed INT8 encoding, and INT4 packing/unpacking |
+| 19 | [Quantized GEMM / FP8](tutorials/19_quantized_gemm_fp8.md) | Low-precision dot products, accumulator precision, and scale epilogues |
+| 20 | [RoPE](tutorials/20_rope.md) | Adjacent feature-pair rotations and absolute position indexing |
+| 21 | [KV-cache updates](tutorials/21_kv_cache_updates.md) | Indexed appends into preallocated storage |
+| 22 | [Decode attention](tutorials/22_decode_attention.md) | Single-query online attention over ragged caches and shared KV heads |
+| 23 | [Dropout](tutorials/23_dropout.md) | Seeded random masks and regenerated first-order gradients |
+| 24 | [SwiGLU](tutorials/24_swiglu.md) | Two tiled projections with a fused gated epilogue |
+| 25 | [Cross entropy](tutorials/25_cross_entropy.md) | Stable log-sum-exp, target indexing, and ignored rows |
+| 26 | [MoE routing](tutorials/26_moe_routing.md) | Deterministic top-2 selection, atomic dispatch, and weighted gather |
 
-The tutorials use contiguous FP32 tensors and state their supported shapes and numerical assumptions individually. Their fixed configurations emphasize understanding the algorithms. Tutorials 1–16 implement forward computations; tutorial 17 adds a custom autograd function with first-order gradients for multi-head attention. The FlashAttention examples support the modes described in each guide and use no dropout.
+Each tutorial states its supported shapes, dtypes, and numerical assumptions. Most use contiguous FP32 tensors; tutorials 18–19 introduce integer formats, packing, and an optional native FP8 GEMM path. Native FP8 in tutorial 19 requires compute capability >= 9.0 and a compatible PyTorch/Triton build; its INT8 path runs independently. Fixed configurations emphasize understanding the algorithms. Tutorials 17 and 23 register custom autograd functions with first-order gradients for attention and dropout respectively; the other raw Triton operations implement forward computation. The FlashAttention examples support the modes described in each guide and use no dropout.
 
 ## Correctness and performance
 
@@ -107,21 +116,17 @@ The script writes `h100-roofline.svg` and `memory-compute-time-bounds.svg` into 
 
 ## Further practice
 
-After the existing tutorials, extend the same patterns to:
+After completing the tutorials, extend the same patterns to:
 
 | Operation | Main kernel idea |
 | --- | --- |
-| Dropout | Elementwise operations and random-number generation |
-| SwiGLU | GEMM, activation, and multiplication |
-| Cross entropy | Reduction and indexing |
-| RoPE | Pairwise rotation of features |
-| Quantization / dequantization | Reductions, packing, unpacking, and scaling |
-| Quantized GEMM / FP8 | Matrix multiplication with explicit precision and scaling choices |
-| MoE routing | Reductions, top-k selection, and scatter |
-| KV-cache updates | Indexed memory operations |
-| Decode attention | Attention specialized for decoding and cache access |
+| Group-scaled quantization | Scales per feature group and scaling inside GEMM reductions |
+| Paged KV caches | Block-table lookup and cache allocation |
+| Split-KV decode | Parallel cache chunks and merging online softmax states |
+| Fused training operations | Backward kernels for SwiGLU, RoPE, and cross entropy |
+| Expert computation | Per-expert GEMMs, load balancing, and distributed routing |
 
-These are suggested exercises beyond the current 17 tutorials.
+These are suggested exercises beyond the current 26 tutorials.
 
 ## Recommended Kernel Sequence for Learning :
 
@@ -162,9 +167,23 @@ I would work through Triton in this sequence:
       ↓
 17. FlashAttention backward
       ↓
-18. Quantized GEMM / FP8
+18. Quantization / dequantization
       ↓
-19. KV-cache/decode kernels
+19. Quantized GEMM / FP8
+      ↓
+20. RoPE
+      ↓
+21. KV-cache updates
+      ↓
+22. Decode attention
+      ↓
+23. Dropout
+      ↓
+24. SwiGLU
+      ↓
+25. Cross entropy
+      ↓
+26. MoE routing
 ```
 
 ## License

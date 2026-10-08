@@ -1,6 +1,6 @@
 # 17. FlashAttention backward: recompute probabilities and accumulate gradients
 
-Previous: [multi-head FlashAttention](16_multi_head_flashattention.md). Related: [online softmax](13_online_softmax.md) and [FlashAttention forward](14_flashattention_forward.md).
+Previous: [multi-head FlashAttention](16_multi_head_flashattention.md). Next: [quantization / dequantization](18_quantization_dequantization.md). Related: [online softmax](13_online_softmax.md) and [FlashAttention forward](14_flashattention_forward.md).
 
 This is a self-contained Markdown notebook. Run sections 1–8 in order, or run the final complete code block independently. Inputs are contiguous FP32 tensors of finite values on one NVIDIA CUDA GPU, with moderate magnitudes whose products and sums remain representable in FP32. Fixed tiles and IEEE dot products make this a teaching implementation of the FlashAttention algorithm; optimized Tensor Core implementations have different performance characteristics. No dropout is used. This guide adds first-order gradients for matching `(B,H,T,D)` Q/K/V tensors and supports both unmasked and square causal self-attention. It includes all forward code needed by backward and a custom PyTorch autograd function. T=1–4096 and D=1–128; B*H is at most 65535.
 
@@ -545,7 +545,7 @@ Triton timing includes the delta launch and both gradient launches, output alloc
 
 ## Try next
 
-Try tuning tiles and lower-precision dot products only after preserving the output and gradient checks. For an established optimized API, compare against [PyTorch scaled dot-product attention](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html), documenting its selected backend and dtype separately from the explicit dense baseline used here.
+Continue with [quantization / dequantization](18_quantization_dequantization.md) and [quantized GEMM / FP8](19_quantized_gemm_fp8.md). Try tuning tiles and lower-precision dot products only after preserving the output and gradient checks. For an established optimized API, compare against [PyTorch scaled dot-product attention](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html), documenting its selected backend and dtype separately from the explicit dense baseline used here.
 
 ## 9. Complete code in one block
 
