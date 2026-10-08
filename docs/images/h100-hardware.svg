@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="790" viewBox="0 0 1200 790" role="img" aria-labelledby="title desc">
+<title id="title">H100 SXM 80 GB: hardware map</title><desc id="desc">A CPU launches work on a GPU with 132 streaming multiprocessors, a shared 50 MB L2 cache, and 80 GB HBM3. A zoomed streaming multiprocessor shows schedulers, registers, arithmetic units, Tensor Cores, and its combined L1 and shared-memory capacity.</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L9,4.5 L0,9" fill="#64748b"/></marker></defs>
+<rect width="1200" height="790" rx="16" fill="#f8fafc"/>
+<g font-family="DejaVu Sans, Arial, sans-serif">
+<text x="32" y="42" font-size="27" fill="#172b4d" font-weight="700" text-anchor="start">H100 SXM 80 GB: hardware map</text>
+<text x="32" y="73" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Conceptual organization; boxes are not a physical floorplan.</text>
+<rect x="32" y="102" width="330" height="105" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="50" y="133" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">CPU / host Python</text>
+<text x="50" y="162" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Create tensors and launch kernels.</text>
+<text x="50" y="187" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Transfers use a host-device link.</text>
+<path d="M362,156 L434,156" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<text x="375" y="134" font-size="15" fill="#475569" font-weight="400" text-anchor="start">launch</text>
+<rect x="444" y="102" width="724" height="105" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="462" y="133" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">GPU / device</text>
+<text x="462" y="162" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Many independent programs can run at once.</text>
+<text x="462" y="187" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Host-device bandwidth is separate from HBM bandwidth.</text>
+<rect x="32" y="235" width="618" height="416" rx="12" fill="#eff6ff" stroke="#93c5fd" stroke-width="2"/>
+<text x="52" y="269" font-size="21" fill="#2563eb" font-weight="700" text-anchor="start">132 active streaming multiprocessors (SMs)</text>
+<rect x="52" y="292" width="130" height="120" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="70" y="323" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">SM 0</text>
+<text x="70" y="352" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Run blocks</text>
+<text x="70" y="377" font-size="17" fill="#475569" font-weight="400" text-anchor="start">and warps</text>
+<rect x="197" y="292" width="130" height="120" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="215" y="323" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">SM 1</text>
+<text x="215" y="352" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Run blocks</text>
+<text x="215" y="377" font-size="17" fill="#475569" font-weight="400" text-anchor="start">and warps</text>
+<rect x="342" y="292" width="130" height="120" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="360" y="323" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">SM 2</text>
+<text x="360" y="352" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Run blocks</text>
+<text x="360" y="377" font-size="17" fill="#475569" font-weight="400" text-anchor="start">and warps</text>
+<rect x="487" y="292" width="130" height="120" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="505" y="323" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">SM 131</text>
+<text x="505" y="352" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Run blocks</text>
+<text x="505" y="377" font-size="17" fill="#475569" font-weight="400" text-anchor="start">and warps</text>
+<text x="341" y="439" font-size="16" fill="#475569" font-weight="400" text-anchor="middle">Only four of the 132 SMs are drawn.</text>
+<path d="M342,447 L342,475" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+<rect x="52" y="484" width="578" height="71" rx="12" fill="#dbeafe" stroke="#cbd5e1" stroke-width="2"/>
+<text x="70" y="515" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">50 MB L2 cache</text>
+<text x="70" y="544" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Shared across the GPU</text>
+<path d="M342,560 L342,585" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+<rect x="52" y="594" width="578" height="42" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="70" y="625" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">Memory controllers</text>
+<path d="M342,652 L342,683" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+<rect x="32" y="692" width="618" height="72" rx="12" fill="#ecfdf5" stroke="#cbd5e1" stroke-width="2"/>
+<text x="50" y="723" font-size="20" fill="#047857" font-weight="700" text-anchor="start">80 GB HBM3: global device memory</text>
+<text x="50" y="752" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Rated bandwidth: 3.35 TB/s</text>
+<rect x="685" y="235" width="483" height="65" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="703" y="266" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">Zoom into one SM</text>
+<rect x="685" y="316" width="483" height="83" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="703" y="347" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">Warp schedulers</text>
+<text x="703" y="376" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Issue instructions from ready warps.</text>
+<rect x="685" y="415" width="483" height="83" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="703" y="446" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">65,536 x 32-bit registers</text>
+<text x="703" y="475" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Thread values; capacity is shared by resident blocks.</text>
+<rect x="685" y="514" width="233" height="91" rx="12" fill="#fff7ed" stroke="#cbd5e1" stroke-width="2"/>
+<text x="703" y="545" font-size="20" fill="#b45309" font-weight="700" text-anchor="start">128 FP32 units</text>
+<text x="703" y="574" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Elementwise math</text>
+<rect x="934" y="514" width="234" height="91" rx="12" fill="#ecfdf5" stroke="#cbd5e1" stroke-width="2"/>
+<text x="952" y="545" font-size="20" fill="#047857" font-weight="700" text-anchor="start">4 Tensor Cores</text>
+<text x="952" y="574" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Matrix tile math</text>
+<rect x="685" y="621" width="483" height="99" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="703" y="652" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">256 KB combined L1 / shared memory</text>
+<text x="703" y="681" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Shared-memory portion: up to 228 KB per SM.</text>
+<text x="703" y="706" font-size="17" fill="#475569" font-weight="400" text-anchor="start">L1 and shared memory share this capacity.</text>
+<text x="685" y="750" font-size="17" fill="#475569" font-weight="400" text-anchor="start">A CUDA thread is a software context, not a core.</text>
+</g></svg>

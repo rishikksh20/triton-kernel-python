@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="830" viewBox="0 0 1200 830" role="img" aria-labelledby="title desc">
+<title id="title">Data movement and coalesced access</title><desc id="desc">An illustrative global-load path connects HBM to L2, optional L1, and thread registers. Shared memory is a separate cooperative staging area. Eight illustrated lanes access contiguous or widely separated addresses, showing why nearby addresses need fewer memory transactions.</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L9,4.5 L0,9" fill="#64748b"/></marker></defs>
+<rect width="1200" height="830" rx="16" fill="#f8fafc"/>
+<g font-family="DejaVu Sans, Arial, sans-serif">
+<text x="32" y="42" font-size="27" fill="#172b4d" font-weight="700" text-anchor="start">Data movement and coalesced access</text>
+<text x="32" y="73" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Caches can satisfy a load before it reaches HBM. Shared memory is a separate staging area.</text>
+<rect x="32" y="106" width="255" height="100" rx="12" fill="#ecfdf5" stroke="#cbd5e1" stroke-width="2"/>
+<text x="50" y="137" font-size="20" fill="#047857" font-weight="700" text-anchor="start">HBM3 / global</text>
+<text x="50" y="166" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Large arrays</text>
+<text x="50" y="191" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Visible to all programs</text>
+<path d="M291,155 L325,155" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="335" y="106" width="225" height="100" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="353" y="137" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">L2 cache</text>
+<text x="353" y="166" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Shared by SMs</text>
+<text x="353" y="191" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Automatic caching</text>
+<path d="M564,155 L598,155" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="608" y="106" width="225" height="100" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="626" y="137" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">L1 cache</text>
+<text x="626" y="166" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Within an SM</text>
+<text x="626" y="191" font-size="17" fill="#475569" font-weight="400" text-anchor="start">May be bypassed</text>
+<path d="M837,155 L871,155" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="881" y="106" width="287" height="100" rx="12" fill="#fff7ed" stroke="#cbd5e1" stroke-width="2"/>
+<text x="899" y="137" font-size="20" fill="#b45309" font-weight="700" text-anchor="start">Registers</text>
+<text x="899" y="166" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Per-thread working values</text>
+<text x="899" y="191" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Input to arithmetic</text>
+<rect x="32" y="236" width="1136" height="87" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="50" y="267" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">Shared memory: cooperative on-chip storage within a block</text>
+<text x="50" y="296" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Compiler-managed staging for some reductions and matrix operations; tl.load does not always stage here.</text>
+<text x="32" y="367" font-size="22" fill="#047857" font-weight="700" text-anchor="start">Coalesced: nearby lanes request nearby elements</text>
+<text x="32" y="395" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Eight lanes shown; a real NVIDIA warp contains 32 lanes.</text>
+<rect x="32" y="414" width="127" height="47" rx="12" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="2"/>
+<text x="95" y="445" font-size="18" fill="#047857" font-weight="400" text-anchor="middle">lane 0</text>
+<path d="M95,467 L95,496" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="32" y="506" width="127" height="47" rx="12" fill="#dbeafe" stroke="#93c5fd" stroke-width="2"/>
+<text x="95" y="537" font-size="18" fill="#2563eb" font-weight="400" text-anchor="middle">X[0]</text>
+<rect x="174" y="414" width="127" height="47" rx="12" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="2"/>
+<text x="237" y="445" font-size="18" fill="#047857" font-weight="400" text-anchor="middle">lane 1</text>
+<path d="M237,467 L237,496" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="174" y="506" width="127" height="47" rx="12" fill="#dbeafe" stroke="#93c5fd" stroke-width="2"/>
+<text x="237" y="537" font-size="18" fill="#2563eb" font-weight="400" text-anchor="middle">X[1]</text>
+<rect x="316" y="414" width="127" height="47" rx="12" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="2"/>
+<text x="379" y="445" font-size="18" fill="#047857" font-weight="400" text-anchor="middle">lane 2</text>
+<path d="M379,467 L379,496" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="316" y="506" width="127" height="47" rx="12" fill="#dbeafe" stroke="#93c5fd" stroke-width="2"/>
+<text x="379" y="537" font-size="18" fill="#2563eb" font-weight="400" text-anchor="middle">X[2]</text>
+<rect x="458" y="414" width="127" height="47" rx="12" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="2"/>
+<text x="521" y="445" font-size="18" fill="#047857" font-weight="400" text-anchor="middle">lane 3</text>
+<path d="M521,467 L521,496" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="458" y="506" width="127" height="47" rx="12" fill="#dbeafe" stroke="#93c5fd" stroke-width="2"/>
+<text x="521" y="537" font-size="18" fill="#2563eb" font-weight="400" text-anchor="middle">X[3]</text>
+<rect x="600" y="414" width="127" height="47" rx="12" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="2"/>
+<text x="663" y="445" font-size="18" fill="#047857" font-weight="400" text-anchor="middle">lane 4</text>
+<path d="M663,467 L663,496" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="600" y="506" width="127" height="47" rx="12" fill="#dbeafe" stroke="#93c5fd" stroke-width="2"/>
+<text x="663" y="537" font-size="18" fill="#2563eb" font-weight="400" text-anchor="middle">X[4]</text>
+<rect x="742" y="414" width="127" height="47" rx="12" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="2"/>
+<text x="805" y="445" font-size="18" fill="#047857" font-weight="400" text-anchor="middle">lane 5</text>
+<path d="M805,467 L805,496" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="742" y="506" width="127" height="47" rx="12" fill="#dbeafe" stroke="#93c5fd" stroke-width="2"/>
+<text x="805" y="537" font-size="18" fill="#2563eb" font-weight="400" text-anchor="middle">X[5]</text>
+<rect x="884" y="414" width="127" height="47" rx="12" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="2"/>
+<text x="947" y="445" font-size="18" fill="#047857" font-weight="400" text-anchor="middle">lane 6</text>
+<path d="M947,467 L947,496" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="884" y="506" width="127" height="47" rx="12" fill="#dbeafe" stroke="#93c5fd" stroke-width="2"/>
+<text x="947" y="537" font-size="18" fill="#2563eb" font-weight="400" text-anchor="middle">X[6]</text>
+<rect x="1026" y="414" width="127" height="47" rx="12" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="2"/>
+<text x="1089" y="445" font-size="18" fill="#047857" font-weight="400" text-anchor="middle">lane 7</text>
+<path d="M1089,467 L1089,496" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="1026" y="506" width="127" height="47" rx="12" fill="#dbeafe" stroke="#93c5fd" stroke-width="2"/>
+<text x="1089" y="537" font-size="18" fill="#2563eb" font-weight="400" text-anchor="middle">X[7]</text>
+<text x="32" y="582" font-size="18" fill="#475569" font-weight="400" text-anchor="start">Nearby addresses can be combined into fewer memory transactions.</text>
+<text x="32" y="622" font-size="22" fill="#b45309" font-weight="700" text-anchor="start">Strided: nearby lanes request widely separated elements</text>
+<rect x="32" y="643" width="127" height="47" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+<text x="95" y="674" font-size="18" fill="#b45309" font-weight="400" text-anchor="middle">lane 0</text>
+<path d="M95,696 L95,726" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="32" y="736" width="127" height="47" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+<text x="95" y="767" font-size="18" fill="#b45309" font-weight="400" text-anchor="middle">X[0]</text>
+<rect x="174" y="643" width="127" height="47" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+<text x="237" y="674" font-size="18" fill="#b45309" font-weight="400" text-anchor="middle">lane 1</text>
+<path d="M237,696 L237,726" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="174" y="736" width="127" height="47" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+<text x="237" y="767" font-size="18" fill="#b45309" font-weight="400" text-anchor="middle">X[64]</text>
+<rect x="316" y="643" width="127" height="47" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+<text x="379" y="674" font-size="18" fill="#b45309" font-weight="400" text-anchor="middle">lane 2</text>
+<path d="M379,696 L379,726" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="316" y="736" width="127" height="47" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+<text x="379" y="767" font-size="18" fill="#b45309" font-weight="400" text-anchor="middle">X[128]</text>
+<rect x="458" y="643" width="127" height="47" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+<text x="521" y="674" font-size="18" fill="#b45309" font-weight="400" text-anchor="middle">lane 3</text>
+<path d="M521,696 L521,726" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="458" y="736" width="127" height="47" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+<text x="521" y="767" font-size="18" fill="#b45309" font-weight="400" text-anchor="middle">X[192]</text>
+<rect x="600" y="643" width="127" height="47" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+<text x="663" y="674" font-size="18" fill="#b45309" font-weight="400" text-anchor="middle">lane 4</text>
+<path d="M663,696 L663,726" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="600" y="736" width="127" height="47" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+<text x="663" y="767" font-size="18" fill="#b45309" font-weight="400" text-anchor="middle">X[256]</text>
+<rect x="742" y="643" width="127" height="47" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+<text x="805" y="674" font-size="18" fill="#b45309" font-weight="400" text-anchor="middle">lane 5</text>
+<path d="M805,696 L805,726" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="742" y="736" width="127" height="47" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+<text x="805" y="767" font-size="18" fill="#b45309" font-weight="400" text-anchor="middle">X[320]</text>
+<rect x="884" y="643" width="127" height="47" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+<text x="947" y="674" font-size="18" fill="#b45309" font-weight="400" text-anchor="middle">lane 6</text>
+<path d="M947,696 L947,726" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="884" y="736" width="127" height="47" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+<text x="947" y="767" font-size="18" fill="#b45309" font-weight="400" text-anchor="middle">X[384]</text>
+<rect x="1026" y="643" width="127" height="47" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+<text x="1089" y="674" font-size="18" fill="#b45309" font-weight="400" text-anchor="middle">lane 7</text>
+<path d="M1089,696 L1089,726" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="1026" y="736" width="127" height="47" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+<text x="1089" y="767" font-size="18" fill="#b45309" font-weight="400" text-anchor="middle">X[448]</text>
+<text x="32" y="810" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Usually more transactions for the same useful data; alignment and layout also matter.</text>
+</g></svg>

@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1000" viewBox="0 0 1200 1000" role="img" aria-labelledby="title desc">
+  <title id="title">CUDA software: kernel, grid, block, warp, and thread</title>
+  <desc id="desc">A CPU host launches a CUDA kernel with a grid of four blocks for 1000 elements. Each block contains 256 software threads organized into eight warps of 32. A thread computes its output index as blockIdx.x times blockDim.x plus threadIdx.x. In block 3, indices 768 through 999 are valid and indices 1000 through 1023 skip memory accesses under the condition i less than N. Hardware schedules blocks onto streaming multiprocessors as resources allow; blockIdx does not select an SM. This CUDA example assigns one output element to each thread, so blockDim.x is the actual thread count per block.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M0,0 L9,4.5 L0,9" fill="#64748b"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="1000" rx="16" fill="#f8fafc"/>
+  <g font-family="DejaVu Sans, Arial, sans-serif">
+    <text x="32" y="42" font-size="27" fill="#172b4d" font-weight="700">CUDA software: from a kernel launch to individual threads</text>
+    <text x="32" y="73" font-size="17" fill="#475569">Example: N = 1000; one output element per thread; blockDim.x = 256; gridDim.x = 4</text>
+
+    <rect x="32" y="105" width="240" height="82" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="50" y="137" font-size="20" fill="#2563eb" font-weight="700">CPU host</text>
+    <text x="50" y="165" font-size="17" fill="#475569">Launches the kernel</text>
+    <path d="M277,146 L325,146" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)"/>
+    <rect x="336" y="105" width="832" height="82" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="354" y="137" font-size="20" fill="#2563eb" font-weight="700">Kernel launch grid: ceil(1000 / 256) = 4 blocks</text>
+    <text x="354" y="165" font-size="17" fill="#475569">All threads execute the same kernel code with their own IDs.</text>
+    <path d="M752,187 L752,203 L168,203 M752,203 L1032,203" fill="none" stroke="#64748b" stroke-width="2"/>
+    <path d="M168,203 L168,224 M456,203 L456,224 M744,203 L744,224 M1032,203 L1032,224" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <rect x="32" y="234" width="272" height="126" rx="12" fill="#eff6ff" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="50" y="266" font-size="20" fill="#2563eb" font-weight="700">Block 0</text>
+    <text x="50" y="293" font-size="17" fill="#475569">blockIdx.x = 0</text>
+    <text x="50" y="319" font-size="17" fill="#475569">Output indices: 0..255</text>
+    <text x="50" y="345" font-size="17" fill="#475569">256 valid outputs</text>
+    <rect x="320" y="234" width="272" height="126" rx="12" fill="#eff6ff" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="338" y="266" font-size="20" fill="#2563eb" font-weight="700">Block 1</text>
+    <text x="338" y="293" font-size="17" fill="#475569">blockIdx.x = 1</text>
+    <text x="338" y="319" font-size="17" fill="#475569">Output indices: 256..511</text>
+    <text x="338" y="345" font-size="17" fill="#475569">256 valid outputs</text>
+    <rect x="608" y="234" width="272" height="126" rx="12" fill="#eff6ff" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="626" y="266" font-size="20" fill="#2563eb" font-weight="700">Block 2</text>
+    <text x="626" y="293" font-size="17" fill="#475569">blockIdx.x = 2</text>
+    <text x="626" y="319" font-size="17" fill="#475569">Output indices: 512..767</text>
+    <text x="626" y="345" font-size="17" fill="#475569">256 valid outputs</text>
+    <rect x="896" y="234" width="272" height="126" rx="12" fill="#fff7ed" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="914" y="266" font-size="20" fill="#b45309" font-weight="700">Block 3</text>
+    <text x="914" y="293" font-size="17" fill="#475569">blockIdx.x = 3</text>
+    <text x="914" y="319" font-size="17" fill="#475569">Indices: 768..1023</text>
+    <text x="914" y="345" font-size="17" fill="#475569">232 valid; 24 skipped</text>
+
+    <text x="32" y="403" font-size="21" fill="#172b4d" font-weight="700">Inside any block: 256 threads = 8 warps × 32 threads</text>
+    <text x="32" y="433" font-size="17" fill="#475569">threadIdx.x is local to the block: 0..255. Each warp has lanes 0..31.</text>
+
+    <rect x="32" y="453" width="272" height="82" rx="12" fill="#ecfdf5" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="50" y="485" font-size="20" fill="#047857" font-weight="700">Warp 0: 32 threads</text>
+    <text x="50" y="514" font-size="17" fill="#475569">threadIdx.x = 0..31</text>
+    <rect x="320" y="453" width="272" height="82" rx="12" fill="#ecfdf5" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="338" y="485" font-size="20" fill="#047857" font-weight="700">Warp 1: 32 threads</text>
+    <text x="338" y="514" font-size="17" fill="#475569">threadIdx.x = 32..63</text>
+    <rect x="608" y="453" width="272" height="82" rx="12" fill="#ecfdf5" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="626" y="485" font-size="20" fill="#047857" font-weight="700">Warp 2: 32 threads</text>
+    <text x="626" y="514" font-size="17" fill="#475569">threadIdx.x = 64..95</text>
+    <rect x="896" y="453" width="272" height="82" rx="12" fill="#ecfdf5" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="914" y="485" font-size="20" fill="#047857" font-weight="700">Warp 3: 32 threads</text>
+    <text x="914" y="514" font-size="17" fill="#475569">threadIdx.x = 96..127</text>
+    <rect x="32" y="551" width="272" height="82" rx="12" fill="#ecfdf5" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="50" y="583" font-size="20" fill="#047857" font-weight="700">Warp 4: 32 threads</text>
+    <text x="50" y="612" font-size="17" fill="#475569">threadIdx.x = 128..159</text>
+    <rect x="320" y="551" width="272" height="82" rx="12" fill="#ecfdf5" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="338" y="583" font-size="20" fill="#047857" font-weight="700">Warp 5: 32 threads</text>
+    <text x="338" y="612" font-size="17" fill="#475569">threadIdx.x = 160..191</text>
+    <rect x="608" y="551" width="272" height="82" rx="12" fill="#ecfdf5" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="626" y="583" font-size="20" fill="#047857" font-weight="700">Warp 6: 32 threads</text>
+    <text x="626" y="612" font-size="17" fill="#475569">threadIdx.x = 192..223</text>
+    <rect x="896" y="551" width="272" height="82" rx="12" fill="#ecfdf5" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="914" y="583" font-size="20" fill="#047857" font-weight="700">Warp 7: 32 threads</text>
+    <text x="914" y="612" font-size="17" fill="#475569">threadIdx.x = 224..255</text>
+
+    <rect x="32" y="665" width="553" height="166" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="50" y="697" font-size="20" fill="#2563eb" font-weight="700">Each thread computes its output index</text>
+    <text x="50" y="728" font-size="17" fill="#172b4d">i = blockIdx.x * blockDim.x + threadIdx.x</text>
+    <text x="50" y="757" font-size="17" fill="#475569">Block 1, thread 7: i = 1 * 256 + 7 = 263</text>
+    <text x="50" y="786" font-size="17" fill="#475569">if (i &lt; N) C[i] = A[i] + B[i];</text>
+    <text x="50" y="813" font-size="17" fill="#475569">Only valid threads read and write memory.</text>
+    <rect x="605" y="665" width="563" height="166" rx="12" fill="#fff7ed" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="623" y="697" font-size="20" fill="#b45309" font-weight="700">Last block: the boundary guard matters</text>
+    <text x="623" y="728" font-size="17" fill="#475569">Threads 0..231: indices 768..999 are valid.</text>
+    <text x="623" y="757" font-size="17" fill="#475569">Threads 232..255: indices 1000..1023 skip.</text>
+    <text x="623" y="786" font-size="17" fill="#475569">All 256 threads exist, including those skipped.</text>
+    <text x="623" y="813" font-size="17" fill="#475569">blockDim.x counts actual CUDA threads.</text>
+
+    <rect x="32" y="861" width="1136" height="107" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="50" y="893" font-size="20" fill="#2563eb" font-weight="700">Hardware schedules blocks onto SMs as resources allow</text>
+    <text x="50" y="922" font-size="17" fill="#475569">An ordinary block runs on one SM; several blocks can share an SM when their resources fit.</text>
+    <text x="50" y="951" font-size="17" fill="#475569">blockIdx.x chooses the data region. It does not choose an SM or guarantee execution order.</text>
+  </g>
+</svg>

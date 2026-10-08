@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="725" viewBox="0 0 1200 725" role="img" aria-labelledby="title desc">
+<title id="title">Matrix multiplication: reuse data in tiles</title><desc id="desc">A 64 by 32 tile from A and a 32 by 64 tile from B contribute to a 64 by 64 output tile. A program loops along K and accumulates into its output tile, reusing each loaded value for several multiply-add operations.</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L9,4.5 L0,9" fill="#64748b"/></marker></defs>
+<rect width="1200" height="725" rx="16" fill="#f8fafc"/>
+<g font-family="DejaVu Sans, Arial, sans-serif">
+<text x="32" y="42" font-size="27" fill="#172b4d" font-weight="700" text-anchor="start">Matrix multiplication: reuse data in tiles</text>
+<text x="32" y="73" font-size="17" fill="#475569" font-weight="400" text-anchor="start">C[M, N] = A[M, K] @ B[K, N]    |    One ordinary program owns one output tile.</text>
+<text x="50" y="120" font-size="24" fill="#2563eb" font-weight="700" text-anchor="start">A[M, K]</text>
+<rect x="50" y="140" width="280" height="224" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<path d="M106,140 V364" stroke="#cbd5e1"/><path d="M50, 184.8 H330" stroke="#cbd5e1"/>
+<path d="M162,140 V364" stroke="#cbd5e1"/><path d="M50, 229.6 H330" stroke="#cbd5e1"/>
+<path d="M218,140 V364" stroke="#cbd5e1"/><path d="M50, 274.4 H330" stroke="#cbd5e1"/>
+<path d="M274,140 V364" stroke="#cbd5e1"/><path d="M50, 319.2 H330" stroke="#cbd5e1"/>
+<rect x="162" y="184.8" width="56" height="44.8" rx="0" fill="#bfdbfe" stroke="#2563eb" stroke-width="2"/>
+<text x="50" y="396" font-size="19" fill="#475569" font-weight="400" text-anchor="start">64 rows x 32 K values</text>
+<text x="460" y="120" font-size="24" fill="#2563eb" font-weight="700" text-anchor="start">B[K, N]</text>
+<rect x="460" y="140" width="280" height="224" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<path d="M516,140 V364" stroke="#cbd5e1"/><path d="M460, 184.8 H740" stroke="#cbd5e1"/>
+<path d="M572,140 V364" stroke="#cbd5e1"/><path d="M460, 229.6 H740" stroke="#cbd5e1"/>
+<path d="M628,140 V364" stroke="#cbd5e1"/><path d="M460, 274.4 H740" stroke="#cbd5e1"/>
+<path d="M684,140 V364" stroke="#cbd5e1"/><path d="M460, 319.2 H740" stroke="#cbd5e1"/>
+<rect x="628" y="229.6" width="56" height="44.8" rx="0" fill="#a7f3d0" stroke="#047857" stroke-width="2"/>
+<text x="460" y="396" font-size="19" fill="#475569" font-weight="400" text-anchor="start">32 K values x 64 columns</text>
+<text x="870" y="120" font-size="24" fill="#2563eb" font-weight="700" text-anchor="start">C[M, N]</text>
+<rect x="870" y="140" width="280" height="224" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<path d="M926,140 V364" stroke="#cbd5e1"/><path d="M870, 184.8 H1150" stroke="#cbd5e1"/>
+<path d="M982,140 V364" stroke="#cbd5e1"/><path d="M870, 229.6 H1150" stroke="#cbd5e1"/>
+<path d="M1038,140 V364" stroke="#cbd5e1"/><path d="M870, 274.4 H1150" stroke="#cbd5e1"/>
+<path d="M1094,140 V364" stroke="#cbd5e1"/><path d="M870, 319.2 H1150" stroke="#cbd5e1"/>
+<rect x="1038" y="184.8" width="56" height="44.8" rx="0" fill="#fed7aa" stroke="#b45309" stroke-width="2"/>
+<text x="870" y="396" font-size="19" fill="#475569" font-weight="400" text-anchor="start">64 rows x 64 columns</text>
+<text x="385" y="270" font-size="35" fill="#172b4d" font-weight="700" text-anchor="middle">x</text>
+<text x="795" y="270" font-size="35" fill="#172b4d" font-weight="700" text-anchor="middle">=</text>
+<rect x="32" y="435" width="356" height="109" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="50" y="466" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">1. Load A and B tiles</text>
+<text x="50" y="495" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Reuse A across output columns.</text>
+<text x="50" y="520" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Reuse B across output rows.</text>
+<path d="M394,489 L431,489" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="442" y="435" width="316" height="109" rx="12" fill="#ecfdf5" stroke="#cbd5e1" stroke-width="2"/>
+<text x="460" y="466" font-size="20" fill="#047857" font-weight="700" text-anchor="start">2. tl.dot(A_tile, B_tile)</text>
+<text x="460" y="495" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Supported matrix instructions</text>
+<text x="460" y="520" font-size="17" fill="#475569" font-weight="400" text-anchor="start">FP32 accumulator</text>
+<path d="M764,489 L801,489" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="812" y="435" width="356" height="109" rx="12" fill="#fff7ed" stroke="#cbd5e1" stroke-width="2"/>
+<text x="830" y="466" font-size="20" fill="#b45309" font-weight="700" text-anchor="start">3. Accumulate output tile</text>
+<text x="830" y="495" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Repeat steps 1-3 along K.</text>
+<text x="830" y="520" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Store C after the last K tile.</text>
+<text x="32" y="590" font-size="21" fill="#172b4d" font-weight="700" text-anchor="start">One K step with FP16 inputs:</text>
+<text x="32" y="624" font-size="18" fill="#475569" font-weight="400" text-anchor="start">Load 8,192 bytes; perform 262,144 floating-point operations (counting multiply + add as 2).</text>
+<text x="32" y="656" font-size="18" fill="#475569" font-weight="400" text-anchor="start">32 FLOP/byte for this step, ignoring output traffic, cache effects, and edge padding.</text>
+<text x="32" y="696" font-size="18" fill="#475569" font-weight="400" text-anchor="start">Larger tiles improve reuse but require more registers and possibly more shared memory.</text>
+</g></svg>

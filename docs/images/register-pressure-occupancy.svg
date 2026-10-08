@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="770" viewBox="0 0 1200 770" role="img" aria-labelledby="title desc">
+<title id="title">Register pressure changes how much work can reside on an SM</title><desc id="desc">Two simplified H100 register-only configurations both have 128 threads and four warps per block. At 64 registers per thread, eight blocks use the 65536-register pool and give 32 resident warps, or 50 percent occupancy. At 128 registers per thread, four blocks fit and give 16 resident warps, or 25 percent occupancy. The calculation ignores allocation granularity and other limits and does not claim either configuration is faster.</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L9,4.5 L0,9" fill="#64748b"/></marker></defs>
+<rect width="1200" height="770" rx="16" fill="#f8fafc"/>
+<g font-family="DejaVu Sans, Arial, sans-serif">
+<text x="32" y="42" font-size="27" fill="#172b4d" font-weight="700" text-anchor="start">Register pressure changes how much work can reside on an SM</text>
+<text x="32" y="73" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Register-only illustration: ignore allocation granularity, shared memory, and other residency limits.</text>
+<rect x="32" y="104" width="552" height="457" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="50" y="141" font-size="23" fill="#047857" font-weight="700" text-anchor="start">64 registers per thread</text>
+<text x="50" y="174" font-size="19" fill="#475569" font-weight="400" text-anchor="start">128 threads / block = 4 warps / block</text>
+<text x="50" y="219" font-size="19" fill="#2563eb" font-weight="700" text-anchor="start">Same SM pool: 65,536 registers</text>
+<rect x="50.0" y="237" width="64.5" height="67" rx="0" fill="#ecfdf5" stroke="#047857" stroke-width="2"/>
+<text x="82.25" y="280" font-size="20" fill="#047857" font-weight="700" text-anchor="middle">B0</text>
+<rect x="114.5" y="237" width="64.5" height="67" rx="0" fill="#ecfdf5" stroke="#047857" stroke-width="2"/>
+<text x="146.75" y="280" font-size="20" fill="#047857" font-weight="700" text-anchor="middle">B1</text>
+<rect x="179.0" y="237" width="64.5" height="67" rx="0" fill="#ecfdf5" stroke="#047857" stroke-width="2"/>
+<text x="211.25" y="280" font-size="20" fill="#047857" font-weight="700" text-anchor="middle">B2</text>
+<rect x="243.5" y="237" width="64.5" height="67" rx="0" fill="#ecfdf5" stroke="#047857" stroke-width="2"/>
+<text x="275.75" y="280" font-size="20" fill="#047857" font-weight="700" text-anchor="middle">B3</text>
+<rect x="308.0" y="237" width="64.5" height="67" rx="0" fill="#ecfdf5" stroke="#047857" stroke-width="2"/>
+<text x="340.25" y="280" font-size="20" fill="#047857" font-weight="700" text-anchor="middle">B4</text>
+<rect x="372.5" y="237" width="64.5" height="67" rx="0" fill="#ecfdf5" stroke="#047857" stroke-width="2"/>
+<text x="404.75" y="280" font-size="20" fill="#047857" font-weight="700" text-anchor="middle">B5</text>
+<rect x="437.0" y="237" width="64.5" height="67" rx="0" fill="#ecfdf5" stroke="#047857" stroke-width="2"/>
+<text x="469.25" y="280" font-size="20" fill="#047857" font-weight="700" text-anchor="middle">B6</text>
+<rect x="501.5" y="237" width="64.5" height="67" rx="0" fill="#ecfdf5" stroke="#047857" stroke-width="2"/>
+<text x="533.75" y="280" font-size="20" fill="#047857" font-weight="700" text-anchor="middle">B7</text>
+<text x="50" y="351" font-size="19" fill="#475569" font-weight="400" text-anchor="start">Registers / block = 128 x 64 = 8,192</text>
+<text x="50" y="394" font-size="19" fill="#475569" font-weight="400" text-anchor="start">Blocks fitting = 65,536 / 8,192 = 8</text>
+<text x="50" y="437" font-size="19" fill="#475569" font-weight="400" text-anchor="start">Resident warps = 8 x 4 = 32</text>
+<text x="50" y="510" font-size="24" fill="#047857" font-weight="700" text-anchor="start">Occupancy = 32 / 64 = 50%</text>
+<rect x="616" y="104" width="552" height="457" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="634" y="141" font-size="23" fill="#b45309" font-weight="700" text-anchor="start">128 registers per thread</text>
+<text x="634" y="174" font-size="19" fill="#475569" font-weight="400" text-anchor="start">128 threads / block = 4 warps / block</text>
+<text x="634" y="219" font-size="19" fill="#2563eb" font-weight="700" text-anchor="start">Same SM pool: 65,536 registers</text>
+<rect x="634.0" y="237" width="129.0" height="67" rx="0" fill="#fff7ed" stroke="#b45309" stroke-width="2"/>
+<text x="698.5" y="280" font-size="20" fill="#b45309" font-weight="700" text-anchor="middle">B0</text>
+<rect x="763.0" y="237" width="129.0" height="67" rx="0" fill="#fff7ed" stroke="#b45309" stroke-width="2"/>
+<text x="827.5" y="280" font-size="20" fill="#b45309" font-weight="700" text-anchor="middle">B1</text>
+<rect x="892.0" y="237" width="129.0" height="67" rx="0" fill="#fff7ed" stroke="#b45309" stroke-width="2"/>
+<text x="956.5" y="280" font-size="20" fill="#b45309" font-weight="700" text-anchor="middle">B2</text>
+<rect x="1021.0" y="237" width="129.0" height="67" rx="0" fill="#fff7ed" stroke="#b45309" stroke-width="2"/>
+<text x="1085.5" y="280" font-size="20" fill="#b45309" font-weight="700" text-anchor="middle">B3</text>
+<text x="634" y="351" font-size="19" fill="#475569" font-weight="400" text-anchor="start">Registers / block = 128 x 128 = 16,384</text>
+<text x="634" y="394" font-size="19" fill="#475569" font-weight="400" text-anchor="start">Blocks fitting = 65,536 / 16,384 = 4</text>
+<text x="634" y="437" font-size="19" fill="#475569" font-weight="400" text-anchor="start">Resident warps = 4 x 4 = 16</text>
+<text x="634" y="510" font-size="24" fill="#b45309" font-weight="700" text-anchor="start">Occupancy = 16 / 64 = 25%</text>
+<rect x="32" y="587" width="552" height="125" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="50" y="618" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">Resident does not always mean ready</text>
+<text x="50" y="647" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Waiting warps still occupy resources.</text>
+<text x="50" y="672" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Schedulers need ready instructions to make progress.</text>
+<rect x="616" y="587" width="552" height="125" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="634" y="618" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">Compare measured throughput</text>
+<text x="634" y="647" font-size="17" fill="#475569" font-weight="400" text-anchor="start">More registers may enable useful data reuse.</text>
+<text x="634" y="672" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Higher occupancy does not automatically run faster.</text>
+<text x="32" y="748" font-size="17" fill="#475569" font-weight="400" text-anchor="start">The H100 limit is 64 resident warps per SM. Real block residency is limited by every required resource.</text>
+</g></svg>

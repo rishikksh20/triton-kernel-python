@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+<title id="title">From a Triton tile to CUDA threads</title><desc id="desc">For 1000 elements and tiles of 256, four program instances cover the input. Each ordinary program uses one CUDA block of four 32-thread warps. The final program masks 24 out-of-range elements. The compiler distributes a tile across threads.</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L9,4.5 L0,9" fill="#64748b"/></marker></defs>
+<rect width="1200" height="760" rx="16" fill="#f8fafc"/>
+<g font-family="DejaVu Sans, Arial, sans-serif">
+<text x="32" y="42" font-size="27" fill="#172b4d" font-weight="700" text-anchor="start">From a Triton tile to CUDA threads</text>
+<text x="32" y="73" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Example: N = 1000, BLOCK_SIZE = 256, num_warps = 4, ordinary single-CTA launch</text>
+<rect x="32" y="103" width="1136" height="82" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="50" y="134" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">Launch grid: ceil(1000 / 256) = 4 program instances</text>
+<text x="50" y="163" font-size="17" fill="#475569" font-weight="400" text-anchor="start">program_id chooses the data region; it does not choose an SM.</text>
+<rect x="32" y="214" width="272" height="110" rx="12" fill="#eff6ff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="50" y="245" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">Program 0</text>
+<text x="50" y="274" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Logical offsets: 0..255</text>
+<text x="50" y="299" font-size="17" fill="#475569" font-weight="400" text-anchor="start">256 valid elements</text>
+<rect x="320" y="214" width="272" height="110" rx="12" fill="#eff6ff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="338" y="245" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">Program 1</text>
+<text x="338" y="274" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Logical offsets: 256..511</text>
+<text x="338" y="299" font-size="17" fill="#475569" font-weight="400" text-anchor="start">256 valid elements</text>
+<rect x="608" y="214" width="272" height="110" rx="12" fill="#eff6ff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="626" y="245" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">Program 2</text>
+<text x="626" y="274" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Logical offsets: 512..767</text>
+<text x="626" y="299" font-size="17" fill="#475569" font-weight="400" text-anchor="start">256 valid elements</text>
+<rect x="896" y="214" width="272" height="110" rx="12" fill="#fff7ed" stroke="#cbd5e1" stroke-width="2"/>
+<text x="914" y="245" font-size="20" fill="#b45309" font-weight="700" text-anchor="start">Program 3</text>
+<text x="914" y="274" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Logical offsets: 768..1023</text>
+<text x="914" y="299" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Last 24 masked</text>
+<path d="M168,334 L168,371" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="32" y="381" width="395" height="150" rx="12" fill="#eff6ff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="50" y="412" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">One program -&gt; one CUDA block</text>
+<text x="50" y="441" font-size="17" fill="#475569" font-weight="400" text-anchor="start">4 warps x 32 threads = 128 threads</text>
+<text x="50" y="466" font-size="17" fill="#475569" font-weight="400" text-anchor="start">256 tile elements / 128 threads</text>
+<text x="50" y="491" font-size="17" fill="#475569" font-weight="400" text-anchor="start">= 2 elements per thread on average</text>
+<path d="M427,451 L474,451" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<rect x="485" y="381" width="683" height="150" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<rect x="502" y="400" width="150" height="111" rx="12" fill="#ecfdf5" stroke="#cbd5e1" stroke-width="2"/>
+<text x="520" y="431" font-size="20" fill="#047857" font-weight="700" text-anchor="start">Warp 0</text>
+<text x="520" y="460" font-size="17" fill="#475569" font-weight="400" text-anchor="start">32 threads</text>
+<text x="520" y="485" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Lanes 0..31</text>
+<rect x="667" y="400" width="150" height="111" rx="12" fill="#ecfdf5" stroke="#cbd5e1" stroke-width="2"/>
+<text x="685" y="431" font-size="20" fill="#047857" font-weight="700" text-anchor="start">Warp 1</text>
+<text x="685" y="460" font-size="17" fill="#475569" font-weight="400" text-anchor="start">32 threads</text>
+<text x="685" y="485" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Lanes 0..31</text>
+<rect x="832" y="400" width="150" height="111" rx="12" fill="#ecfdf5" stroke="#cbd5e1" stroke-width="2"/>
+<text x="850" y="431" font-size="20" fill="#047857" font-weight="700" text-anchor="start">Warp 2</text>
+<text x="850" y="460" font-size="17" fill="#475569" font-weight="400" text-anchor="start">32 threads</text>
+<text x="850" y="485" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Lanes 0..31</text>
+<rect x="997" y="400" width="150" height="111" rx="12" fill="#ecfdf5" stroke="#cbd5e1" stroke-width="2"/>
+<text x="1015" y="431" font-size="20" fill="#047857" font-weight="700" text-anchor="start">Warp 3</text>
+<text x="1015" y="460" font-size="17" fill="#475569" font-weight="400" text-anchor="start">32 threads</text>
+<text x="1015" y="485" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Lanes 0..31</text>
+<text x="32" y="574" font-size="21" fill="#172b4d" font-weight="700" text-anchor="start">Compiler layout distributes tile values among threads and registers.</text>
+<text x="32" y="606" font-size="18" fill="#475569" font-weight="400" text-anchor="start">The average above explains the amount of work, not the exact element-to-lane mapping.</text>
+<rect x="32" y="632" width="553" height="92" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="50" y="663" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">Software hierarchy</text>
+<text x="50" y="692" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Grid -&gt; program / block -&gt; warp -&gt; thread</text>
+<rect x="605" y="632" width="563" height="92" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="623" y="663" font-size="20" fill="#2563eb" font-weight="700" text-anchor="start">Hardware scheduling</text>
+<text x="623" y="692" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Blocks are assigned to SMs as resources permit.</text>
+</g></svg>

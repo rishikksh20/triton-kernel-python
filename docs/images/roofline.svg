@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+<title id="title">Why some kernels need bandwidth and others need compute</title><desc id="desc">A conceptual roofline graph shows a bandwidth-limited rising line at low arithmetic intensity and a compute-limited horizontal ceiling at high intensity. It contains no H100 benchmark measurements.</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L9,4.5 L0,9" fill="#64748b"/></marker></defs>
+<rect width="1200" height="650" rx="16" fill="#f8fafc"/>
+<g font-family="DejaVu Sans, Arial, sans-serif">
+<text x="32" y="42" font-size="27" fill="#172b4d" font-weight="700" text-anchor="start">Why some kernels need bandwidth and others need compute</text>
+<text x="32" y="73" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Conceptual roofline only: arbitrary scale, no benchmark measurements.</text>
+<path d="M118,535 L1128,535" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<path d="M118,535 L118,125" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)" />
+<path d="M118,530 L680,198 L1120,198" fill="none" stroke="#2563eb" stroke-width="5"/>
+<path d="M680,198 V535" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 8"/>
+<text x="145" y="130" font-size="21" fill="#172b4d" font-weight="700" text-anchor="start">Attainable FLOP/s</text>
+<text x="790" y="183" font-size="21" fill="#2563eb" font-weight="700" text-anchor="start">Compute ceiling</text>
+<text x="246" y="323" font-size="22" fill="#047857" font-weight="700" text-anchor="start">Memory-bound region</text>
+<text x="753" y="318" font-size="22" fill="#b45309" font-weight="700" text-anchor="start">Compute-bound region</text>
+<text x="246" y="355" font-size="18" fill="#475569" font-weight="400" text-anchor="start">Reduce bytes moved.</text>
+<text x="753" y="350" font-size="18" fill="#475569" font-weight="400" text-anchor="start">Use efficient matrix operations.</text>
+<text x="300" y="506" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Vector add: little work per byte</text>
+<text x="740" y="461" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Tiled matmul: greater data reuse</text>
+<text x="600" y="574" font-size="20" fill="#172b4d" font-weight="700" text-anchor="middle">Arithmetic intensity = floating-point operations / bytes moved</text>
+<text x="32" y="620" font-size="19" fill="#475569" font-weight="400" text-anchor="start">Bound: performance &lt;= min(compute peak, memory bandwidth x arithmetic intensity)</text>
+</g></svg>
