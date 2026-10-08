@@ -1,6 +1,6 @@
 # 4. Sum reduction: combine many values into one
 
-Previous: [fused bias + activation](03_fused_bias_activation.md). Start of the series: [vector addition](01_vector_addition.md).
+Previous: [fused bias + activation](03_fused_bias_activation.md). Next: [max reduction](05_max_reduction.md). Start of the series: [vector addition](01_vector_addition.md).
 
 This is a self-contained Markdown notebook. Run the examples in sections 1–9 in order in a fresh notebook, or run the final complete code block on its own. The final block can also be saved as a Python script. The examples use a contiguous, finite **FP32 vector on one NVIDIA CUDA GPU** and return a **zero-dimensional FP32 tensor**, matching the shape and dtype of `torch.sum(x, dtype=torch.float32)`. They implement forward computation without a registered PyTorch backward operation.
 
