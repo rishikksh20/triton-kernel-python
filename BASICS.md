@@ -143,6 +143,30 @@ The hardware term **CUDA core** refers to an arithmetic unit, even though CUDA i
 
 The H100 supports up to 64 resident warps per SM. Residency does not mean all 64 warps issue instructions simultaneously. More ready work creates opportunities to hide stalls; it does not remove dependencies or make data movement free.
 
+#### 2.5 Inside one SM: four compute quadrants
+
+![One H100 SM with four quadrants, each containing a warp scheduler, a register file used by INT, FP, and Tensor units, and connections to the SM-wide combined L1 cache and shared memory](docs/images/h100-sm-quadrants.svg)
+
+An H100 SM contains **four processing partitions**, drawn here as quadrants. Each has its own warp scheduler, register file, and execution units. All four connect to the same SM-wide L1/shared-memory subsystem. The quadrants show resource organization rather than a physical floorplan. [NVIDIA H100 SM architecture, Figure 4](https://developer.nvidia.com/blog/nvidia-hopper-architecture-in-depth/#h100-sm-architecture)
+
+| Resource | Per quadrant / partition | Across one H100 SM |
+| --- | --- | --- |
+| Warp scheduler | 1, issuing instructions from ready warps | 4 |
+| INT32 units | 16, for integer operations such as index arithmetic | 64 |
+| FP32 units | 32, for single-precision arithmetic | 128 |
+| FP64 units | 16, for double-precision arithmetic | 64 |
+| Fourth-generation Tensor Core | 1, for supported matrix operations | 4 |
+| Register file | 16,384 × 32-bit registers = 64 KiB | 65,536 × 32-bit registers = 256 KiB |
+| Combined L1 / shared-memory storage | Access to the SM-wide resource | 256 KB combined; up to 228 KB for shared memory |
+
+Compute and register counts follow [NVIDIA's H100 SM diagram](https://developer-blogs.nvidia.com/wp-content/uploads/2022/03/H100-Streaming-Multiprocessor-SM-625x869.png). Memory capacities follow the [Hopper tuning guide](https://docs.nvidia.com/cuda/hopper-tuning-guide/index.html#unified-shared-memory-l1-texture-cache).
+
+**Compute division:** each scheduler issues ready-warp instructions to the appropriate execution pipeline. Integer instructions use INT units, floating-point instructions use FP units, and supported matrix instructions use Tensor Cores. Resident warps share those units over time; a warp does not own a permanent set of cores. The unit counts describe hardware resources, not a guarantee that every unit executes simultaneously.
+
+**Register division:** each quadrant's register file holds the working values of its resident warps. INT, FP, and register-based Tensor operands or results use values from this file; there is no separate register pool for each arithmetic type. Registers remain logically private to each thread. A “warp's registers” means the allocations for its 32 threads, not variables automatically visible to every lane.
+
+**Memory division:** L1/shared-memory capacity belongs to the whole SM; it is not divided into four fixed quadrant quotas. Warps of the same block can exchange values through that block's shared-memory allocation even when they use different quadrants, with appropriate synchronization. Sharing physical storage does not grant unrelated blocks access to each other's allocations. Register demand limits residency within partitions, while shared-memory demand consumes the SM-wide budget. See [CUDA memory scope](https://docs.nvidia.com/cuda/cuda-programming-guide/01-introduction/programming-model.html#gpu-memory) and [Hopper resource limits](https://docs.nvidia.com/cuda/hopper-tuning-guide/index.html#occupancy).
+
 ### 3. Hardware memory: registers, shared memory, L1, L2, and HBM
 
 ![Physical GPU memory organization showing HBM, GPU-wide L2, per-SM L1/shared capacity, and register storage, with optional access paths](docs/images/gpu-memory-hierarchy.svg)
@@ -159,7 +183,7 @@ The H100 supports up to 64 resident warps per SM. Residency does not mean all 64
 
 HBM means **high-bandwidth memory**. Its large capacity makes it suitable for arrays that cannot fit in the small on-chip memories. On the H100 SXM, it is HBM3; other GPU models may use another HBM generation or GDDR.
 
-Registers are physically one pool per SM. Values belong logically to individual execution contexts; that does not give every context a separate physical register chip.
+The H100's total register capacity is distributed across four partition-local register files, as shown in Section 2.5. Values belong logically to individual execution contexts; the per-SM total does not mean every warp can draw freely from every partition's registers.
 
 #### 3.2 L1 cache and shared memory share capacity, not behavior
 

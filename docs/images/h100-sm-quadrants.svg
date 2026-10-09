@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1020" viewBox="0 0 1200 1020" role="img" aria-labelledby="title desc">
+  <title id="title">One H100 SM: four compute quadrants sharing L1 and shared memory</title>
+  <desc id="desc">Four processing partitions inside one streaming multiprocessor. Each partition has a warp scheduler and dispatch unit, a 64 KiB register file holding private per-thread values for resident warps, 16 INT32 units, 32 FP32 units, 16 FP64 units, and one fourth-generation Tensor Core. INT, FP, and Tensor register operands and results use the partition-local register file. All four partitions access one SM-wide combined 256 KB L1 data cache and shared-memory subsystem, with up to 228 KB configured as shared memory. Register capacity is partition-local; L1 and shared-memory capacity is SM-wide. Connections show conceptual access, not exact wiring or instruction timing.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8" fill="#64748b"/>
+    </marker>
+    <g id="quadrant">
+      <rect width="532" height="312" rx="12" fill="#eff6ff" stroke="#93c5fd" stroke-width="2"/>
+      <rect x="16" y="44" width="500" height="40" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+      <text x="266" y="70" text-anchor="middle" font-size="18" fill="#2563eb">Warp scheduler + dispatch</text>
+      <path d="M266,85 L266,96" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+      <rect x="16" y="100" width="500" height="64" rx="8" fill="#f5f3ff" stroke="#c4b5fd" stroke-width="2"/>
+      <text x="266" y="125" text-anchor="middle" font-size="18" font-weight="700" fill="#6d28d9">Warp registers: partition-local register file</text>
+      <text x="266" y="150" text-anchor="middle" font-size="16" fill="#475569">16,384 × 32-bit = 64 KiB; values private per thread</text>
+      <path d="M93,169 L93,190" fill="none" stroke="#64748b" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+      <path d="M266,169 L266,190" fill="none" stroke="#64748b" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+      <path d="M439,169 L439,190" fill="none" stroke="#64748b" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+      <rect x="16" y="194" width="154" height="66" rx="8" fill="#fff7ed" stroke="#fdba74"/>
+      <text x="93" y="219" text-anchor="middle" font-size="19" font-weight="700" fill="#b45309">INT units</text>
+      <text x="93" y="245" text-anchor="middle" font-size="16" fill="#475569">16 INT32</text>
+      <rect x="189" y="194" width="154" height="66" rx="8" fill="#fff7ed" stroke="#fdba74"/>
+      <text x="266" y="216" text-anchor="middle" font-size="19" font-weight="700" fill="#b45309">FP units</text>
+      <text x="266" y="236" text-anchor="middle" font-size="15" fill="#475569">32 FP32</text>
+      <text x="266" y="254" text-anchor="middle" font-size="15" fill="#475569">16 FP64</text>
+      <rect x="362" y="194" width="154" height="66" rx="8" fill="#ecfdf5" stroke="#6ee7b7"/>
+      <text x="439" y="219" text-anchor="middle" font-size="18" font-weight="700" fill="#047857">1 Tensor Core</text>
+      <text x="439" y="245" text-anchor="middle" font-size="16" fill="#475569">4th generation</text>
+      <text x="266" y="291" text-anchor="middle" font-size="16" fill="#475569">Load/store units connect to L1 / shared memory</text>
+    </g>
+  </defs>
+  <rect width="1200" height="1020" rx="16" fill="#f8fafc"/>
+  <g font-family="DejaVu Sans, Arial, sans-serif">
+    <text x="32" y="42" font-size="27" font-weight="700" fill="#172b4d">Inside one H100 SM: four compute quadrants</text>
+    <text x="32" y="73" font-size="17" fill="#475569">Each quadrant is a processing partition. Conceptual organization, not a physical floorplan.</text>
+    <rect x="32" y="100" width="1136" height="828" rx="14" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+    <text x="52" y="128" font-size="19" font-weight="700" fill="#172b4d">One streaming multiprocessor (SM)</text>
+    <use href="#quadrant" x="60" y="142"/>
+    <text x="76" y="170" font-size="21" font-weight="700" fill="#2563eb">Quadrant 0</text>
+    <use href="#quadrant" x="608" y="142"/>
+    <text x="624" y="170" font-size="21" font-weight="700" fill="#2563eb">Quadrant 1</text>
+    <path d="M326,459 L326,476" fill="none" stroke="#64748b" stroke-width="2.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <path d="M874,459 L874,476" fill="none" stroke="#64748b" stroke-width="2.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <rect x="60" y="480" width="1080" height="90" rx="10" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="2"/>
+    <text x="600" y="508" text-anchor="middle" font-size="23" font-weight="700" fill="#047857">SM-wide L1 data cache / shared memory: 256 KB combined</text>
+    <text x="600" y="535" text-anchor="middle" font-size="17" fill="#475569">All four quadrants access this storage; up to 228 KB can be configured as shared memory.</text>
+    <text x="600" y="558" text-anchor="middle" font-size="16" fill="#475569">Capacity is shared across the SM, with no fixed per-quadrant quota.</text>
+    <path d="M326,574 L326,591" fill="none" stroke="#64748b" stroke-width="2.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <path d="M874,574 L874,591" fill="none" stroke="#64748b" stroke-width="2.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <use href="#quadrant" x="60" y="596"/>
+    <text x="76" y="624" font-size="21" font-weight="700" fill="#2563eb">Quadrant 2</text>
+    <use href="#quadrant" x="608" y="596"/>
+    <text x="624" y="624" font-size="21" font-weight="700" fill="#2563eb">Quadrant 3</text>
+    <text x="32" y="960" font-size="17" font-weight="700" fill="#172b4d">Compute and register files: per partition. L1 / shared-memory capacity: per SM.</text>
+    <text x="32" y="990" font-size="16" fill="#475569">Arrows show access; Tensor instructions may also use shared-memory operands. Other units are omitted.</text>
+  </g>
+</svg>
