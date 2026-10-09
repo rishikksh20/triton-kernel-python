@@ -2,7 +2,7 @@
 
 A hands-on guide to writing GPU kernels in Python with Triton. Start with GPU architecture and vector addition, then build up to reductions, normalization, tiled matrix multiplication, FlashAttention, quantization, decoding, and routed expert kernels.
 
-The repository contains a [GPU fundamentals guide](BASICS.md), **26 self-contained Markdown tutorials**, and a [standalone matrix multiplication example](kernels/matrix_multiplication.py). The tutorials connect each operation's equations to a PyTorch reference, a Triton kernel, correctness checks, and benchmarks you can run on your GPU.
+The repository contains a [GPU fundamentals guide](BASICS.md), **26 self-contained Markdown tutorials**, a [standalone matrix multiplication example](kernels/matrix_multiplication.py), and [Triton-only kernel files](kernels) for the other 25 tutorial topics. The tutorials connect each operation's equations to a PyTorch reference, a Triton kernel, correctness checks, and benchmarks you can run on your GPU.
 
 ## Start here
 
@@ -65,6 +65,8 @@ GEMM passed: (65, 47) @ (47, 70) = (65, 70)
 The `matmul(a, b)` wrapper supports contiguous rank-two FP16 or BF16 tensors with matching dtype on the same CUDA GPU. It accumulates in FP32 and returns the input dtype. Uneven dimensions exercise the masks at tile boundaries.
 
 The tutorials are Markdown files. To run one, copy its numbered Python sections into a fresh notebook and execute them in order, or save its final **Complete code in one block** section as a `.py` file and run it in the same environment. Each tutorial includes its own imports and definitions.
+
+The other files in [kernels](kernels) contain only Triton imports, JIT kernels, and device helpers. Each file documents buffer shapes and dtypes, launch grids, tile sizes, and any required stage ordering or initialization, with comments explaining the computation. Allocate buffers and launch these kernels from your own caller; they contain no PyTorch references, allocation wrappers, benchmarks, or executable examples. The existing matrix multiplication example retains its standalone interface.
 
 ## Learning sequence
 
