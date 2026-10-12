@@ -9,7 +9,7 @@ This is a self-contained Markdown notebook. Run the examples in sections 1–8 i
 A maximum reduction selects the largest input value:
 
 $$
-m=\max_{0\le i<N}x_i.
+m=\max_{0\le i\le N-1}x_i.
 $$
 
 For `x = [-2, 7, 1.5, -4, 3]`, the result is `7`. This tutorial returns the value, not its index. [`torch.max(x)`](https://docs.pytorch.org/docs/stable/generated/torch.max.html) is the matching PyTorch reference. `torch.max(x, dim=...)` additionally returns indices, which this kernel does not compute.
@@ -17,7 +17,7 @@ For `x = [-2, 7, 1.5, -4, 3]`, the result is `7`. This tutorial returns the valu
 The reduction can combine tiles in stages:
 
 $$
-p_j=\max_{jB\le i<\min((j+1)B,N)}x_i,
+p_j=\max_{jB\le i\le \min((j+1)B,N)-1}x_i,
 \qquad m=\max_j p_j.
 $$
 

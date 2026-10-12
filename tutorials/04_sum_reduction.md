@@ -247,8 +247,8 @@ The hand-worked input produces `15.0` for all three paths and zero absolute erro
 Real-number addition is associative; floating-point addition can depend on the grouping:
 
 $$
-\operatorname{fl}(\operatorname{fl}(a+b)+c)
-\ne \operatorname{fl}(a+\operatorname{fl}(b+c)).
+\mathrm{fl}(\mathrm{fl}(a+b)+c)
+\ne \mathrm{fl}(a+\mathrm{fl}(b+c)).
 $$
 
 For example, FP32 can lose the `1` in `(100000000 + 1) - 100000000`, even though the mathematical sum is `1`. PyTorch and Triton can use different trees. A small difference between their final sums does not necessarily mean an implementation error. See [PyTorch's numerical-accuracy notes](https://docs.pytorch.org/docs/stable/notes/numerical_accuracy.html).

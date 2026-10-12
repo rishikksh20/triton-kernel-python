@@ -19,7 +19,7 @@ The shape stays the same. The three choices differ in what they do to negative v
 The rectified linear unit keeps positive values and replaces negative values with zero:
 
 $$
-\operatorname{ReLU}(x)=\max(0,x)
+\mathrm{ReLU}(x)=\max(0,x)
 =\begin{cases}0 & x\le0,\\x & x>0.\end{cases}
 $$
 
@@ -29,7 +29,7 @@ The sigmoid linear unit scales the input by its logistic sigmoid:
 
 $$
 \sigma(x)=\frac{1}{1+e^{-x}}, \qquad
-\operatorname{SiLU}(x)=x\sigma(x).
+\mathrm{SiLU}(x)=x\sigma(x).
 $$
 
 It retains small negative outputs and changes smoothly around zero. See [PyTorch's SiLU definition](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.silu.html).
@@ -39,8 +39,8 @@ It retains small negative outputs and changes smoothly around zero. See [PyTorch
 The Gaussian error linear unit scales the input by the standard normal cumulative distribution function $\Phi$:
 
 $$
-\operatorname{GELU}(x)=x\Phi(x)
-=\frac{x}{2}\left(1+\operatorname{erf}\left(\frac{x}{\sqrt{2}}\right)\right).
+\mathrm{GELU}(x)=x\Phi(x)
+=\frac{x}{2}\left(1+\mathrm{erf}\left(\frac{x}{\sqrt{2}}\right)\right).
 $$
 
 This is the formula selected by `F.gelu(x, approximate="none")`. It is evaluated in floating-point arithmetic, so “exact GELU” names the formula rather than promising an infinitely precise result.
@@ -48,7 +48,7 @@ This is the formula selected by `F.gelu(x, approximate="none")`. It is evaluated
 PyTorch also offers a different, tanh-based approximation:
 
 $$
-\operatorname{GELU}_{\mathrm{tanh}}(x)
+\mathrm{GELU}_{\mathrm{tanh}}(x)
 \approx\frac{x}{2}\left[1+\tanh\left(\sqrt{\frac{2}{\pi}}
 \left(x+0.044715x^3\right)\right)\right].
 $$

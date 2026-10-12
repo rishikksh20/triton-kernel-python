@@ -19,9 +19,9 @@ The activation can be any of the following:
 
 $$
 \begin{aligned}
-\operatorname{ReLU}(z)&=\max(0,z),\\
-\operatorname{SiLU}(z)&=\frac{z}{1+e^{-z}},\\
-\operatorname{GELU}(z)&=\frac{z}{2}\left(1+\operatorname{erf}(z/\sqrt{2})\right).
+\mathrm{ReLU}(z)&=\max(0,z),\\
+\mathrm{SiLU}(z)&=\frac{z}{1+e^{-z}},\\
+\mathrm{GELU}(z)&=\frac{z}{2}\left(1+\mathrm{erf}(z/\sqrt{2})\right).
 \end{aligned}
 $$
 
