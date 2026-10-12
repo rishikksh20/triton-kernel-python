@@ -15,9 +15,9 @@ $$
 The bias is broadcast across rows. The activation acts independently on each completed dot product. This guide implements ReLU, SiLU, and both GELU formulas from [the activation guide](02_relu_silu_gelu.md).
 
 $$
-\operatorname{ReLU}(z)=\max(0,z),\quad
-\operatorname{SiLU}(z)=z/(1+e^{-z}),\quad
-\operatorname{GELU}(z)=\tfrac12z\left(1+\operatorname{erf}(z/\sqrt2)\right).
+\mathrm{ReLU}(z)=\max(0,z),\quad
+\mathrm{SiLU}(z)=z/(1+e^{-z}),\quad
+\mathrm{GELU}(z)=\tfrac12z\left(1+\mathrm{erf}(z/\sqrt2)\right).
 $$
 
 The tanh GELU variant uses `F.gelu(..., approximate="tanh")`; the erf variant uses `approximate="none"`. Matching that mode is part of matching the operation.
