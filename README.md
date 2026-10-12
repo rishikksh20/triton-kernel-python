@@ -2,7 +2,7 @@
 
 A hands-on guide to writing GPU kernels in Python with Triton. Start with GPU architecture and vector addition, then build up to reductions, normalization, tiled matrix multiplication, FlashAttention, quantization, decoding, and routed expert kernels.
 
-The repository contains a [GPU fundamentals guide](BASICS.md), **26 self-contained Markdown tutorials**, a [standalone matrix multiplication example](kernels/matrix_multiplication.py), and [Triton-only kernel files](kernels) for the other 25 tutorial topics. The tutorials connect each operation's equations to a PyTorch reference, a Triton kernel, correctness checks, and benchmarks you can run on your GPU.
+The repository contains a [GPU fundamentals guide](BASICS.md), **31 self-contained Markdown tutorials**, a [standalone matrix multiplication example](kernels/matrix_multiplication.py), and [Triton-only kernel files](kernels) for the other 30 tutorial topics. The tutorials connect each operation's equations to a PyTorch reference, a Triton kernel, correctness checks, and benchmarks you can run on your GPU.
 
 ## Start here
 
@@ -100,8 +100,13 @@ Each step adds a kernel pattern used by later examples.
 | 24 | [SwiGLU](tutorials/24_swiglu.md) | Two tiled projections with a fused gated epilogue |
 | 25 | [Cross entropy](tutorials/25_cross_entropy.md) | Stable log-sum-exp, target indexing, and ignored rows |
 | 26 | [MoE routing](tutorials/26_moe_routing.md) | Deterministic top-2 selection, atomic dispatch, and weighted gather |
+| 27 | [Group-scaled quantization](tutorials/27_group_scaled_quantization.md) | Scales per feature group and scaling inside GEMM reductions |
+| 28 | [Paged KV caches](tutorials/28_paged_kv_caches.md) | Block-table lookup, page allocation, and ordered cache appends |
+| 29 | [Split-KV decode](tutorials/29_split_kv_decode.md) | Parallel cache chunks and merging online softmax states |
+| 30 | [Fused training operations](tutorials/30_fused_training_operations.md) | Backward kernels for SwiGLU, RoPE, and cross entropy |
+| 31 | [Expert computation](tutorials/31_expert_computation.md) | Per-expert GEMMs, load balancing, and distributed routing |
 
-Each tutorial states its supported shapes, dtypes, and numerical assumptions. Most use contiguous FP32 tensors; tutorials 18–19 introduce integer formats, packing, and an optional native FP8 GEMM path. Native FP8 in tutorial 19 requires compute capability >= 9.0 and a compatible PyTorch/Triton build; its INT8 path runs independently. Fixed configurations emphasize understanding the algorithms. Tutorials 17 and 23 register custom autograd functions with first-order gradients for attention and dropout respectively; the other raw Triton operations implement forward computation. The FlashAttention examples support the modes described in each guide and use no dropout.
+Each tutorial states its supported shapes, dtypes, and numerical assumptions. Most use contiguous FP32 tensors; tutorials 18–19 introduce integer formats, packing, and an optional native FP8 GEMM path, and tutorial 27 adds group-scaled INT8 GEMM. Native FP8 in tutorial 19 requires compute capability >= 9.0 and a compatible PyTorch/Triton build; its INT8 path runs independently. Fixed configurations emphasize understanding the algorithms. Tutorials 17 and 23 register custom autograd functions with first-order gradients for attention and dropout respectively. Tutorial 30 adds raw first-order backward kernels for SwiGLU, RoPE, and cross entropy, with PyTorch autograd comparisons. Tutorial 31 also demonstrates an auxiliary load-balancing loss and its router-logits gradient. Other operations implement forward computation. The FlashAttention examples support the modes described in each guide and use no dropout.
 
 ## Correctness and performance
 
@@ -116,19 +121,19 @@ python docs/generate_performance_graphs.py
 
 The script writes `h100-roofline.svg` and `memory-compute-time-bounds.svg` into [docs/images](docs/images). The other diagrams in that directory illustrate GPU architecture, execution, memory, and tiling.
 
-## Further practice
+## Advanced extensions
 
-After completing the tutorials, extend the same patterns to:
+Tutorials 27–31 extend the earlier patterns in this order:
 
 | Operation | Main kernel idea |
 | --- | --- |
-| Group-scaled quantization | Scales per feature group and scaling inside GEMM reductions |
-| Paged KV caches | Block-table lookup and cache allocation |
-| Split-KV decode | Parallel cache chunks and merging online softmax states |
-| Fused training operations | Backward kernels for SwiGLU, RoPE, and cross entropy |
-| Expert computation | Per-expert GEMMs, load balancing, and distributed routing |
+| [Group-scaled quantization](tutorials/27_group_scaled_quantization.md) | Scales per feature group and scaling inside GEMM reductions |
+| [Paged KV caches](tutorials/28_paged_kv_caches.md) | Block-table lookup and cache allocation |
+| [Split-KV decode](tutorials/29_split_kv_decode.md) | Parallel cache chunks and merging online softmax states |
+| [Fused training operations](tutorials/30_fused_training_operations.md) | Backward kernels for SwiGLU, RoPE, and cross entropy |
+| [Expert computation](tutorials/31_expert_computation.md) | Per-expert GEMMs, load balancing, and distributed routing |
 
-These are suggested exercises beyond the current 26 tutorials.
+These guides include runnable references, boundary checks, and complete code blocks. The paged-cache allocator demonstrates exclusive page ownership with explicit failure status. The expert guide includes a two-rank simulation on one GPU and an optional host collective function for initialized distributed workers; multi-GPU execution requires a configured process group and agreed buffer shapes.
 
 ## Recommended Kernel Sequence for Learning :
 
@@ -186,6 +191,16 @@ I would work through Triton in this sequence:
 25. Cross entropy
       ↓
 26. MoE routing
+      ↓
+27. Group-scaled quantization
+      ↓
+28. Paged KV caches
+      ↓
+29. Split-KV decode
+      ↓
+30. Fused training operations
+      ↓
+31. Expert computation
 ```
 
 ## License

@@ -1,6 +1,6 @@
 # 26. MoE routing: deterministic top-2 choices and capacity-limited scatter
 
-Previous: [Cross entropy](25_cross_entropy.md). Start of the series: [vector addition](01_vector_addition.md).
+Previous: [Cross entropy](25_cross_entropy.md). Next: [Group-scaled quantization](27_group_scaled_quantization.md). Start of the series: [vector addition](01_vector_addition.md).
 
 This is a self-contained Markdown notebook. Run sections 1–8 in order, or run the final complete code block independently. Routing logits are finite, moderate, contiguous FP32 `(T,E)` and token features are contiguous FP32 `(T,D)` on one NVIDIA CUDA GPU. T >= 1, E=2–256, and D=1–1024. This forward-only example selects exactly two distinct experts per token, normalizes their selected logits, dispatches to per-expert buffers, and combines a toy expert result. There is no registered backward, routing noise, auxiliary loss, or distributed communication.
 
@@ -282,7 +282,7 @@ The two accepted token sets need not match each other or another run. Tests chec
 
 ## Try next
 
-Replace the toy expert scale with per-expert [batched GEMMs](11_batched_matmul.md) or [SwiGLU](24_swiglu.md), using populated slots only. Then study prefix-sum dispatch, load-balancing losses, and distributed expert communication as separate extensions.
+Continue with [group-scaled quantization](27_group_scaled_quantization.md), then work through the cache and training extensions in order. [Expert computation](31_expert_computation.md) replaces the toy expert scale with per-expert GEMMs and adds a balancing objective, load diagnostics, and distributed routing. Prefix-sum dispatch and full router-training integration remain further exercises.
 
 ## 9. Complete code in one block
 
