@@ -118,19 +118,6 @@ uv run python docs/generate_performance_graphs.py
 
 The script writes `h100-roofline.svg` and `memory-compute-time-bounds.svg` into [docs/images](docs/images). The other diagrams in that directory illustrate GPU architecture, execution, memory, and tiling.
 
-## Advanced extensions
-
-Tutorials 27–31 extend the earlier patterns in this order:
-
-| Operation | Main kernel idea |
-| --- | --- |
-| [Group-scaled quantization](tutorials/27_group_scaled_quantization.md) | Scales per feature group and scaling inside GEMM reductions |
-| [Paged KV caches](tutorials/28_paged_kv_caches.md) | Block-table lookup and cache allocation |
-| [Split-KV decode](tutorials/29_split_kv_decode.md) | Parallel cache chunks and merging online softmax states |
-| [Fused training operations](tutorials/30_fused_training_operations.md) | Backward kernels for SwiGLU, RoPE, and cross entropy |
-| [Expert computation](tutorials/31_expert_computation.md) | Per-expert GEMMs, load balancing, and distributed routing |
-
-These guides include runnable references, boundary checks, and complete code blocks. The paged-cache allocator demonstrates exclusive page ownership with explicit failure status. The expert guide includes a two-rank simulation on one GPU and an optional host collective function for initialized distributed workers; multi-GPU execution requires a configured process group and agreed buffer shapes.
 
 ## Recommended Kernel Sequence for Learning :
 
