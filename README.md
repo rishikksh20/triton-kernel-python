@@ -16,26 +16,24 @@ Basic Python and familiarity with arrays are enough to begin reading. The fundam
 
 Running the kernels requires:
 
-- Linux and a Python version supported by your chosen PyTorch and Triton releases.
-- A compatible NVIDIA GPU with a working NVIDIA driver.
-- CUDA-enabled PyTorch and a compatible Triton installation.
+- Linux x86_64 and Python 3.12 or 3.13 (the project defaults to 3.12).
+- A compatible NVIDIA GPU with a working NVIDIA driver that supports CUDA 12.8.
+- [uv](https://docs.astral.sh/uv/getting-started/installation/) to manage Python and dependencies.
 
 Clone the repository and create an isolated environment:
 
 ```bash
 git clone https://github.com/rishikksh20/kernel-triton-python.git
 cd kernel-triton-python
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
+uv sync
 ```
 
-Install CUDA-enabled PyTorch using the command from the [official PyTorch installation selector](https://pytorch.org/get-started/locally/) for Linux, Pip, Python, and a CUDA version suited to your system. Verify the imports below before changing Triton dependencies. See the [official Triton installation guide](https://triton-lang.org/main/getting-started/installation.html) for installation options, and [the environment setup in BASICS.md](BASICS.md#8-set-up-an-environment) for more detail.
+The small [pyproject.toml](pyproject.toml) manifest installs CUDA 12.8 PyTorch from the official PyTorch wheel index, its compatible Triton version and CUDA runtime libraries, plus NumPy and Matplotlib for the graph generator. `uv` creates `.venv` automatically; activation is optional when using `uv run`. The NVIDIA driver must be installed on the host separately. See [uv's PyTorch guide](https://docs.astral.sh/uv/guides/integration/pytorch/) for the index configuration and [PyTorch's published CUDA builds](https://pytorch.org/get-started/previous-versions/) for other CUDA versions.
 
 Check the driver with `nvidia-smi`, then verify the Python environment:
 
 ```bash
-python - <<'PY'
+uv run python - <<'PY'
 import torch
 import triton
 
@@ -53,7 +51,7 @@ PY
 From the repository root, run the standalone matrix multiplication example:
 
 ```bash
-python kernels/matrix_multiplication.py
+uv run python kernels/matrix_multiplication.py
 ```
 
 It computes `(65, 47) @ (47, 70)` with FP16 inputs, compares the result with PyTorch, and prints:
@@ -112,11 +110,10 @@ Each tutorial states its supported shapes, dtypes, and numerical assumptions. Mo
 
 Run each tutorial's PyTorch comparisons and boundary checks before experimenting with tile sizes or launch settings. The benchmark sections produce timings on your own GPU; record the device, package versions, shapes, dtype, and precision settings when comparing results. See [BASICS.md: performance measurement](BASICS.md#15-how-to-measure-performance) for warmup and GPU timing guidance.
 
-The H100 roofline and time-bound graphs in the fundamentals guide are calculated models. To regenerate those SVGs without a GPU, install the plotting dependencies and run:
+The H100 roofline and time-bound graphs in the fundamentals guide are calculated models. To regenerate those SVGs without a GPU, run:
 
 ```bash
-python -m pip install matplotlib numpy
-python docs/generate_performance_graphs.py
+uv run python docs/generate_performance_graphs.py
 ```
 
 The script writes `h100-roofline.svg` and `memory-compute-time-bounds.svg` into [docs/images](docs/images). The other diagrams in that directory illustrate GPU architecture, execution, memory, and tiling.
